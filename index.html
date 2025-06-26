@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>趣味数学8</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+            font-size: 1.8em;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+            font-size: 1.4em;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .rule {
+            background-color: #f1f9fe;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+            font-size: 0.95em;
+        }
+        .question {
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 15px 0 5px 0;
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #3498db;
+        }
+        .answer {
+            color: #27ae60;
+            margin: 0 0 20px 20px;
+            padding: 8px 12px;
+            background-color: #f1f9fe;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        /* 周期动画样式 */
+        .cycle-animation {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            height: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cycle-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            font-weight: bold;
+            position: absolute;
+            animation-duration: 8s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+        .cycle-item:nth-child(1) {
+            background-color: #e74c3c;
+            color: white;
+            animation-name: cycle1;
+        }
+        .cycle-item:nth-child(2) {
+            background-color: #3498db;
+            color: white;
+            animation-name: cycle2;
+        }
+        .cycle-item:nth-child(3) {
+            background-color: #2ecc71;
+            color: white;
+            animation-name: cycle3;
+        }
+        @keyframes cycle1 {
+            0%, 33.33% { left: 0%; opacity: 1; }
+            33.34%, 100% { left: 100%; opacity: 0; }
+        }
+        @keyframes cycle2 {
+            0%, 33.33% { left: 100%; opacity: 0; }
+            33.34%, 66.66% { left: 0%; opacity: 1; }
+            66.67%, 100% { left: 100%; opacity: 0; }
+        }
+        @keyframes cycle3 {
+            0%, 66.66% { left: 100%; opacity: 0; }
+            66.67%, 100% { left: 0%; opacity: 1; }
+        }
+        
+        /* 线段图动画 */
+        .line-diagram {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            position: relative;
+            height: 100px;
+        }
+        .line-segment {
+            height: 20px;
+            background-color: #3498db;
+            margin: 10px 0;
+            position: relative;
+            border-radius: 10px;
+        }
+        .line-segment::after {
+            content: attr(data-label);
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8em;
+        }
+        .line-segment.compare {
+            background-color: #e74c3c;
+        }
+        .line-segment.difference {
+            height: 5px;
+            background-color: #f39c12;
+            margin-left: 10px;
+            position: absolute;
+            top: 60px;
+        }
+        .line-segment.difference::after {
+            content: attr(data-diff);
+            right: auto;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -20px;
+            color: #f39c12;
+        }
+        
+        /* 折扣计算动画 */
+        .discount-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            height: 100px;
+        }
+        .price-tag {
+            width: 80px;
+            height: 40px;
+            background-color: #2ecc71;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            border-radius: 5px;
+            position: relative;
+            margin: 0 15px;
+            animation: pricePulse 2s infinite;
+        }
+        .price-tag::before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #2ecc71;
+            transform: rotate(45deg);
+            left: -5px;
+        }
+        .price-tag.original {
+            background-color: #e74c3c;
+        }
+        .price-tag.original::before {
+            background-color: #e74c3c;
+        }
+        .discount-arrow {
+            font-size: 1.5em;
+            color: #3498db;
+        }
+        @keyframes pricePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* 鸡兔同笼动画 */
+        .animals-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .animal {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+        }
+        .animal-icon {
+            width: 60px;
+            height: 60px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-bottom: 5px;
+        }
+        .animal-label {
+            font-size: 0.8em;
+            text-align: center;
+        }
+        .legs-count {
+            font-size: 0.7em;
+            color: #7f8c8d;
+        }
+        
+        /* 乘除法动画 */
+        .calculation-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .number-bubble {
+            width: 40px;
+            height: 40px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin: 0 5px;
+            animation: bubbleFloat 3s infinite ease-in-out;
+        }
+        .operator {
+            font-size: 1.2em;
+            margin: 0 5px;
+        }
+        @keyframes bubbleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* 排列组合动画 */
+        .permutation-animation {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .permutation-item {
+            width: 40px;
+            height: 40px;
+            background-color: #9b59b6;
+            color: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin: 5px;
+            animation: permutationPulse 2s infinite;
+        }
+        @keyframes permutationPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.9); opacity: 0.8; }
+        }
+		.container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        /* 第一张图片样式 */
+        .slide-image {
+            text-align: center;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 90%;
+        }
+        .slide-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3498db;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .blue-line {
+            width: 4px;
+            height: 30px;
+            background: #3498db;
+            margin-right: 10px;
+        }
+        .cycle-icon {
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .square {
+            width: 20px;
+            height: 20px;
+            background: white;
+        }
+        .slide-footer {
+            color: #2ecc71;
+            font-size: 18px;
+            text-align: left;
+            margin-top: 30px;
+        }
+        
+        /* 第二张图片样式 */
+        .bar-chart {
+            text-align: center;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 90%;
+        }
+        .bar {
+            height: 30px;
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            border-radius: 4px;
+        }
+        .bar-blue {
+            background: #3498db;
+            width: 100px;
+        }
+        .bar-red {
+            background: #e74c3c;
+            width: 200px;
+        }
+        .bar-label {
+            color: white;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        
+        /* 其他内容样式保持不变 */
+        .section-title {
+            color: #e74c3c;
+            border-left: 4px solid #e74c3c;
+            padding-left: 10px;
+            margin: 20px 0;
+        }
+        .rule-box {
+            background: #f1f9fe;
+            padding: 12px;
+            border-radius: 0 6px 6px 0;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+        .question {
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 15px 0 5px 0;
+        }
+        .answer {
+            color: #27ae60;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>趣味数学8</h1>
+    
+    <div class="section">
+        <h2>周期问题初步</h2>
+        
+        <!-- 周期动画 -->
+        <div class="cycle-animation">
+            <div class="cycle-item">△</div>
+            <div class="cycle-item">□</div>
+            <div class="cycle-item">○</div>
+        </div>
+        
+        <h3>1、周期规律</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>周期序列中元素循环出现，周期长度固定。
+        </div>
+        
+        <div class="question">图形序列△□○△□○的第20个是？</div>
+        <div class="answer">△</div>
+        
+        <div class="question">数字序列1,2,3,1,2,3,...第15个数字是多少？</div>
+        <div class="answer">3</div>
+        
+        <div class="question">序列A,B,C,A,B,C,...第10个元素是什么？</div>
+        <div class="answer">A</div>
+        
+        <h3>2、求和应用</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>周期内求和后乘以周期数得总和。
+        </div>
+        
+        <div class="question">前30个数字1,2,3按序列循环和是多少？</div>
+        <div class="answer">60</div>
+        
+        <div class="question">数列2,4,6,2,4,6,...前18项和是多少？</div>
+        <div class="answer">54</div>
+        
+        <div class="question">数字序列5,10,15循环3次和是多少？</div>
+        <div class="answer">90</div>
+    </div>
+    
+    <div class="section">
+        <h2>和差倍问题入门</h2>
+        
+          <div class="bar-chart">
+            <div class="bar bar-blue">
+                <span class="bar-label">乙</span>
+            </div>
+            <div class="bar bar-red">
+                <span class="bar-label">甲</span>
+            </div>
+        </div>
+        
+        <h3>1、线段图解法</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>用线段表示数量关系，直观理解倍数和差值。
+        </div>
+        
+        <div class="question">甲是乙的2倍，乙表示1段，甲表示几段？</div>
+        <div class="answer">2段</div>
+        
+        <div class="question">丙比乙的3倍多1，如何用线段表示？</div>
+        <div class="answer">乙3段加1段</div>
+        
+        <div class="question">甲比乙多4，用线段表示乙3段，甲几段？</div>
+        <div class="answer">3段加4单位</div>
+        
+        <h3>2、复杂关系</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>结合多段线段表示更复杂的倍数关系。
+        </div>
+        
+        <div class="question">丙是乙的3倍多2，乙是4，丙是多少？</div>
+        <div class="answer">14</div>
+        
+        <div class="question">甲比乙少3，乙是5，甲是多少？</div>
+        <div class="answer">2</div>
+        
+        <div class="question">丙比甲多5，甲是7，丙是多少？</div>
+        <div class="answer">12</div>
+    </div>
+    
+    <div class="section">
+        <h2>简单经济问题</h2>
+        
+        <!-- 折扣动画 -->
+        <div class="discount-animation">
+            <div class="price-tag original">¥100</div>
+            <div class="discount-arrow">→</div>
+            <div class="price-tag">¥80</div>
+        </div>
+        
+        <h3>1、折扣计算</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>折后价 = 原价 × 折扣率。
+        </div>
+        
+        <div class="question">原价80元，打8折后多少钱？</div>
+        <div class="answer">64元</div>
+        
+        <div class="question">商品原价150元，打9折后价格是多少？</div>
+        <div class="answer">135元</div>
+        
+        <div class="question">原价200元商品，打7折后多少钱？</div>
+        <div class="answer">140元</div>
+        
+        <h3>2、优惠比较</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>比较打折价与满减价，选择更划算方案。
+        </div>
+        
+        <div class="question">原价599元，打7折和满300减50哪个更划算？</div>
+        <div class="answer">打7折更划算（419.3元）</div>
+        
+        <div class="question">购物400元，满减50和打8折哪个省钱？</div>
+        <div class="answer">满减50省钱</div>
+        
+        <div class="question">原价500元，打6折和满200减30哪个优惠更多？</div>
+        <div class="answer">打6折更优惠（300元）</div>
+    </div>
+    
+    <div class="section">
+        <h2>图解鸡兔同笼</h2>
+        
+        <!-- 鸡兔同笼动画 -->
+        <div class="animals-container">
+            <div class="animal">
+                <div class="animal-icon" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'40\' fill=\'%23e74c3c\'/><circle cx=\'35\' cy=\'40\' r=\'5\' fill=\'white\'/><circle cx=\'65\' cy=\'40\' r=\'5\' fill=\'white\'/><path d=\'M40,65 Q50,75 60,65\' stroke=\'white\' stroke-width=\'3\' fill=\'none\'/></svg>')"></div>
+                <div class="animal-label">鸡</div>
+                <div class="legs-count">2条腿</div>
+            </div>
+            <div class="animal">
+                <div class="animal-icon" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><ellipse cx=\'50\' cy=\'60\' rx=\'30\' ry=\'40\' fill=\'%233498db\'/><circle cx=\'35\' cy=\'40\' r=\'5\' fill=\'white\'/><circle cx=\'65\' cy=\'40\' r=\'5\' fill=\'white\'/><path d=\'M40,70 Q50,80 60,70\' stroke=\'white\' stroke-width=\'3\' fill=\'none\'/><path d=\'M30,90 L30,70\' stroke=\'white\' stroke-width=\'3\'/><path d=\'M40,90 L40,70\' stroke=\'white\' stroke-width=\'3\'/><path d=\'M60,90 L60,70\' stroke=\'white\' stroke-width=\'3\'/><path d=\'M70,90 L70,70\' stroke=\'white\' stroke-width=\'3\'/></svg>')"></div>
+                <div class="animal-label">兔</div>
+                <div class="legs-count">4条腿</div>
+            </div>
+        </div>
+        
+        <h3>1、腿数问题</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>鸡有2条腿，兔有4条腿，合计计算总腿数。
+        </div>
+        
+        <div class="question">3只鸡和2只兔共有多少条腿？</div>
+        <div class="answer">14条腿</div>
+        
+        <div class="question">5只鸡和4只兔共有多少条腿？</div>
+        <div class="answer">26条腿</div>
+        
+        <div class="question">2只鸡和3只兔共有多少条腿？</div>
+        <div class="answer">16条腿</div>
+        
+        <h3>2、分组法</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>按固定比例分组计算总数。
+        </div>
+        
+        <div class="question">兔是鸡的2倍，每组1鸡2兔，共几条腿？</div>
+        <div class="answer">10条腿</div>
+        
+        <div class="question">16条腿相当于几组1鸡2兔？</div>
+        <div class="answer">1.6组</div>
+        
+        <div class="question">若有4组1鸡2兔，共多少只鸡和兔？</div>
+        <div class="answer">4鸡8兔</div>
+    </div>
+    
+    <div class="section">
+        <h2>乘除法巧算</h2>
+        
+        <!-- 乘除法动画 -->
+        <div class="calculation-animation">
+            <div class="number-bubble" style="animation-delay: 0s;">125</div>
+            <div class="operator">×</div>
+            <div class="number-bubble" style="animation-delay: 0.2s;">4</div>
+            <div class="operator">×</div>
+            <div class="number-bubble" style="animation-delay: 0.4s;">8</div>
+            <div class="operator">=</div>
+            <div class="number-bubble" style="background-color: #2ecc71; animation-delay: 0.6s;">4000</div>
+        </div>
+        
+        <h3>1. 乘法凑整技巧</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>利用数字"好朋友"关系凑成整十、整百、整千简化乘法。
+        </div>
+        
+        <div class="question">125×4×8 =</div>
+        <div class="answer">4000</div>
+        
+        <div class="question">25×8×5 =</div>
+        <div class="answer">1000</div>
+        
+        <div class="question">5×2×10 =</div>
+        <div class="answer">100</div>
+        
+        <h3>2. 带符号搬家法则</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>乘除混合运算中，允许调整乘除的顺序（乘除先后交换），但不可随意改变除法的顺序。
+        </div>
+        
+        <div class="question">6×15÷3 =</div>
+        <div class="answer">30</div>
+        
+        <div class="question">9×12÷6 =</div>
+        <div class="answer">18</div>
+        
+        <div class="question">24÷8×5 =</div>
+        <div class="answer">15</div>
+        
+        <h3>3. 乘除法去括号技巧</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>分配律可用于乘法和除法，a×(b÷c)=a×b÷c，a÷(b÷c)=a÷b×c。
+        </div>
+        
+        <div class="question">40÷(8÷2) =</div>
+        <div class="answer">10</div>
+        
+        <div class="question">48÷(12÷3) =</div>
+        <div class="answer">12</div>
+        
+        <div class="question">60÷(15÷5) =</div>
+        <div class="answer">20</div>
+        
+        <h3>4. 乘除法添括号方法</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>在多个除法连除时，添括号改变运算顺序，等同于乘除结合计算，如64÷4÷2=64÷(4×2)。
+        </div>
+        
+        <div class="question">72÷6÷2 =</div>
+        <div class="answer">6</div>
+        
+        <div class="question">120÷5÷4 =</div>
+        <div class="answer">6</div>
+        
+        <div class="question">96÷8÷3 =</div>
+        <div class="answer">4</div>
+    </div>
+    
+    <div class="section">
+        <h2>枚举法与排列组合</h2>
+        
+        <!-- 排列组合动画 -->
+        <div class="permutation-animation">
+            <div class="permutation-item">A</div>
+            <div class="permutation-item">B</div>
+            <div class="permutation-item">C</div>
+            <div class="permutation-item">D</div>
+        </div>
+        
+        <h3>1. 分配问题</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>相同物品分配用"隔板法"计算组合数，公式为C(n+k-1, k-1)。
+        </div>
+        
+        <div class="question">6个苹果分给2人（可空）=</div>
+        <div class="answer">7</div>
+        
+        <div class="question">8金币分3人，每人至少1个=</div>
+        <div class="answer">21</div>
+        
+        <div class="question">4糖果分2人（可空）=</div>
+        <div class="answer">5</div>
+        
+        <h3>2. 数字排列</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>数字排列要注意数字和、限制条件，排列是有序选择。
+        </div>
+        
+        <div class="question">所有两位数中，数字和为9的有多少个？</div>
+        <div class="answer">9个</div>
+        
+        <div class="question">三位数中，数字和为6的有多少个？</div>
+        <div class="answer">21</div>
+        
+        <div class="question">一个三位数，个位是2，十位比个位多1，百位是十位的2倍，这个数是多少？</div>
+        <div class="answer">624</div>
+        
+        <h3>3. 特殊排列</h3>
+        <div class="rule">
+            <strong>运算法则：</strong>限制顺序问题先确定固定条件，再排列其余部分。
+        </div>
+        
+        <div class="question">ABC3个字母排不允许A在B前 =</div>
+        <div class="answer">3</div>
+        
+        <div class="question">4位数，首位1-9，末位0-9 =</div>
+        <div class="answer">90</div>
+        
+        <div class="question">5个人排队，A必须在B前 =</div>
+        <div class="answer">60</div>
+    </div>
+</body>
+</html>
