@@ -51,19 +51,56 @@
         }
         .question {
             font-weight: bold;
-            color: #2c3e50;
+            color: #e74c3c; /* 红色问题文本 */
             margin: 15px 0 5px 0;
             padding: 8px 12px;
             background-color: #f8f9fa;
             border-left: 3px solid #3498db;
+            cursor: pointer;
+        }
+        /* 答案容器样式 */
+        .answer-container {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+            border: 1px solid #d1fae5;
+            border-radius: 8px;
+            padding: 5px 15px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .answer-container:hover {
+            background: linear-gradient(135deg, #dcffe4 0%, #c6f6d5 100%);
+            transform: translateX(5px);
+        }
+        .answer-prompt {
+            color: #10b981;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .answer-prompt:before {
+            content: "✨";
+            margin-right: 10px;
+            font-size: 1.2em;
         }
         .answer {
             color: #27ae60;
-            margin: 0 0 20px 20px;
-            padding: 8px 12px;
-            background-color: #f1f9fe;
-            border-radius: 4px;
+            margin-left: 20px;
+            padding: 10px 15px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid #10b981;
+            border-radius: 0 8px 8px 0;
+            display: none;
             font-weight: bold;
+            animation: fadeIn 0.5s ease;
+        }
+        .show-answer .answer {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         /* 周期动画样式 */
@@ -118,50 +155,38 @@
             66.67%, 100% { left: 0%; opacity: 1; }
         }
         
-        /* 线段图动画 */
-        .line-diagram {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f5f7fa;
+        /* 条形图样式 */
+        .bar-chart {
+            text-align: center;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
             border-radius: 8px;
-            position: relative;
-            height: 100px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 90%;
         }
-        .line-segment {
-            height: 20px;
-            background-color: #3498db;
-            margin: 10px 0;
-            position: relative;
-            border-radius: 10px;
+        .bar {
+            height: 30px;
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            border-radius: 4px;
         }
-        .line-segment::after {
-            content: attr(data-label);
-            position: absolute;
-            right: -30px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.8em;
+        .bar-blue {
+            background: #3498db;
+            width: 100px;
         }
-        .line-segment.compare {
-            background-color: #e74c3c;
+        .bar-red {
+            background: #e74c3c;
+            width: 200px;
         }
-        .line-segment.difference {
-            height: 5px;
-            background-color: #f39c12;
+        .bar-label {
+            color: white;
             margin-left: 10px;
-            position: absolute;
-            top: 60px;
-        }
-        .line-segment.difference::after {
-            content: attr(data-diff);
-            right: auto;
-            left: 50%;
-            transform: translateX(-50%);
-            top: -20px;
-            color: #f39c12;
+            font-weight: bold;
         }
         
-        /* 折扣计算动画 */
+        /* 折扣动画样式 */
         .discount-animation {
             display: flex;
             justify-content: center;
@@ -206,199 +231,6 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
-        
-        /* 鸡兔同笼动画 */
-        .animals-container {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-        .animal {
-            width: 80px;
-            height: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 10px;
-        }
-        .animal-icon {
-            width: 60px;
-            height: 60px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            margin-bottom: 5px;
-        }
-        .animal-label {
-            font-size: 0.8em;
-            text-align: center;
-        }
-        .legs-count {
-            font-size: 0.7em;
-            color: #7f8c8d;
-        }
-        
-        /* 乘除法动画 */
-        .calculation-animation {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px 0;
-        }
-        .number-bubble {
-            width: 40px;
-            height: 40px;
-            background-color: #3498db;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            margin: 0 5px;
-            animation: bubbleFloat 3s infinite ease-in-out;
-        }
-        .operator {
-            font-size: 1.2em;
-            margin: 0 5px;
-        }
-        @keyframes bubbleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        /* 排列组合动画 */
-        .permutation-animation {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-        .permutation-item {
-            width: 40px;
-            height: 40px;
-            background-color: #9b59b6;
-            color: white;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            margin: 5px;
-            animation: permutationPulse 2s infinite;
-        }
-        @keyframes permutationPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(0.9); opacity: 0.8; }
-        }
-		.container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-        }
-        /* 第一张图片样式 */
-        .slide-image {
-            text-align: center;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            width: 90%;
-        }
-        .slide-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #3498db;
-            font-size: 24px;
-            margin-bottom: 30px;
-        }
-        .blue-line {
-            width: 4px;
-            height: 30px;
-            background: #3498db;
-            margin-right: 10px;
-        }
-        .cycle-icon {
-            width: 60px;
-            height: 60px;
-            background: #3498db;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .square {
-            width: 20px;
-            height: 20px;
-            background: white;
-        }
-        .slide-footer {
-            color: #2ecc71;
-            font-size: 18px;
-            text-align: left;
-            margin-top: 30px;
-        }
-        
-        /* 第二张图片样式 */
-        .bar-chart {
-            text-align: center;
-            margin: 30px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            width: 90%;
-        }
-        .bar {
-            height: 30px;
-            margin: 15px auto;
-            display: flex;
-            align-items: center;
-            border-radius: 4px;
-        }
-        .bar-blue {
-            background: #3498db;
-            width: 100px;
-        }
-        .bar-red {
-            background: #e74c3c;
-            width: 200px;
-        }
-        .bar-label {
-            color: white;
-            margin-left: 10px;
-            font-weight: bold;
-        }
-        
-        /* 其他内容样式保持不变 */
-        .section-title {
-            color: #e74c3c;
-            border-left: 4px solid #e74c3c;
-            padding-left: 10px;
-            margin: 20px 0;
-        }
-        .rule-box {
-            background: #f1f9fe;
-            padding: 12px;
-            border-radius: 0 6px 6px 0;
-            margin: 15px 0;
-            border-left: 4px solid #3498db;
-        }
-        .question {
-            font-weight: bold;
-            color: #2c3e50;
-            margin: 15px 0 5px 0;
-        }
-        .answer {
-            color: #27ae60;
-            margin-left: 20px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
@@ -420,13 +252,22 @@
         </div>
         
         <div class="question">图形序列△□○△□○的第20个是？</div>
-        <div class="answer">□</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">□</div>
+        </div>
         
         <div class="question">数字序列1,2,3,1,2,3,...第15个数字是多少？</div>
-        <div class="answer">3</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">3</div>
+        </div>
         
         <div class="question">序列A,B,C,A,B,C,...第10个元素是什么？</div>
-        <div class="answer">A</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">A</div>
+        </div>
         
         <h3>2、求和应用</h3>
         <div class="rule">
@@ -434,19 +275,28 @@
         </div>
         
         <div class="question">前30个数字1,2,3按序列循环和是多少？</div>
-        <div class="answer">60</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">60</div>
+        </div>
         
         <div class="question">数列2,4,6,2,4,6,...前18项和是多少？</div>
-        <div class="answer">72</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">72</div>
+        </div>
         
         <div class="question">数字序列5,10,15循环3次和是多少？</div>
-        <div class="answer">90</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">90</div>
+        </div>
     </div>
     
     <div class="section">
         <h2>和差倍问题入门</h2>
         
-          <div class="bar-chart">
+        <div class="bar-chart">
             <div class="bar bar-blue">
                 <span class="bar-label">乙</span>
             </div>
@@ -461,13 +311,22 @@
         </div>
         
         <div class="question">甲是乙的2倍，乙表示1段，甲表示几段？</div>
-        <div class="answer">2段</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">2段</div>
+        </div>
         
         <div class="question">小明年龄是小红的一半多1岁，若小红用4段表示年龄，小明如何表示？</div>
-        <div class="answer">2段 + 1单位​</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">2段 + 1单位</div>
+        </div>
         
         <div class="question">丁是乙的2倍少3，若乙用3段表示，丁如何表示？</div>
-        <div class="answer"> ​​6段 - 3单位​</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">6段 - 3单位</div>
+        </div>
         
         <h3>2、复杂关系</h3>
         <div class="rule">
@@ -475,13 +334,22 @@
         </div>
         
         <div class="question">甲是乙的2倍，乙是丙的3倍，若丙用1段表示，甲如何表示？</div>
-        <div class="answer">6段</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">6段</div>
+        </div>
         
         <div class="question">书包的价格是铅笔的7倍多20元，铅笔的价格是橡皮的2倍少1元。若橡皮用1段表示，书包如何表示？</div>
-        <div class="answer">​14段 + 13单位​</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">14段 + 13单位</div>
+        </div>
         
         <div class="question">甲是乙的4倍，若乙用1段表示，甲如何表示？</div>
-        <div class="answer">4段</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">4段</div>
+        </div>
     </div>
     
     <div class="section">
@@ -500,30 +368,57 @@
         </div>
         
         <div class="question">一件衣服原价200元，打8折出售，折后价是多少？</div>
-        <div class="answer">160元</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">160元</div>
+        </div>
         
         <div class="question">一本书折后价45元，打9折出售，原价是多少？</div>
-        <div class="answer">50元​</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">50元</div>
+        </div>
         
         <div class="question">一件商品先打5折，再打8折，相当于最终打几折？</div>
-        <div class="answer">4折</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">4折</div>
+        </div>
         
         <h3>2、优惠比较</h3>
         <div class="rule">
             <strong>运算法则：</strong>比较打折价与满减价，选择更划算方案。
         </div>
         
-        <div class="question">一件衣服原价300元，A店打7折，B店“满200减50”，哪个更划算？</div>
-        <div class="answer">A店更便宜（210 < 250）</div>
+        <div class="question">一件衣服原价300元，A店打7折，B店"满200减50"，哪个更划算？</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">A店更便宜（210 < 250）</div>
+        </div>
         
-        <div class="question">一台电脑原价4500元，A店“满3000减400，满5000减800”，B店打88折，怎么选？</div>
-        <div class="answer">B店更划算（3960 < 4100）</div>
+        <div class="question">一台电脑原价4500元，A店"满3000减400，满5000减800"，B店打88折，怎么选？</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">B店更划算（3960 < 4100）</div>
+        </div>
         
-        <div class="question">一台电器原价2000元，A店打75折但运费50元，B店“满1000减200”包邮，选哪个？</div>
-        <div class="answer">A店更划算（1550 < 1800），即使含运费</div>
+        <div class="question">一台电器原价2000元，A店打75折但运费50元，B店"满1000减200"包邮，选哪个？</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">A店更划算（1550 < 1800），即使含运费</div>
+        </div>
     </div>
     
-    
-    </div>
+    <script>
+        // 添加点击显示答案功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const containers = document.querySelectorAll('.answer-container');
+            containers.forEach(container => {
+                container.addEventListener('click', function() {
+                    this.classList.toggle('show-answer');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
